@@ -6,21 +6,27 @@
   align-items: center;
   color: white;
 
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.15);
+
+  .container {
+    width: 100%;
   }
 
+  .i-message-demo-wrap {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
 
-  .title {
-    font-size: 50px;
-    text-transform: uppercase;
-    font-weight: 600;
-    @include vw-font-size(600, 50);
+    .rect-outer {
+      padding: 170% 0 0;
+    }
+
+    .i-message-demo {
+      background: grey;
+    }
+
+    .i-message-list {
+      width: 100%;
+      height: calc(100% - 50px);
+    }
   }
 }

@@ -37,6 +37,25 @@ section {
   }
 }
 
+.input-i-message {
+  border: 1px solid white;
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 70%;
+}
+
+.i-message-list {
+  display: flex;
+  align-items: flex-end;
+}
+
+.i-message-list-item {
+  //position: absolute;
+  //left: 0;
+  //top: 0;
+}
+
 
 @import "partials/section-intro";
-@import "partials/section-features-list";
