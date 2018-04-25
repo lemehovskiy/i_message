@@ -111,31 +111,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function init() {
 
                 var messageBodyStr = 'This is a typewriter effect using GreenSock\'s TextPlugin and an onUpdate hack.';
-                var speed = 30;
-                var endFlashSpeed = 0.3;
-                var character = "|";
+                // const speed = 30;
+                // const endFlashSpeed = 0.3;
+                // const character = "|";
+                //
+                // let typingTl = new TimelineMax();
+                // typingTl.to('.input-i-message', messageBodyStr.length/speed, {
+                //         text:messageBodyStr,
+                //         ease:Linear.easeNone,
+                //         onUpdate:function(){
+                //
+                //             if (this.target[0].textContent.length > 15) {
+                //                 TweenLite.to('.input-i-message', 1, {width: '90%'});
+                //             }
+                //
+                //             this.target[0].textContent += character
+                //
+                //         },
+                //         onComplete:function(){
+                //
+                //
+                //             // this.target[0].textContent = messageBodyStr
+                //         }
+                //     },'+=0.5')
+                //     //makes it flash at the end
 
-                var typingTl = new TimelineMax();
-                typingTl.to('.input-i-message', messageBodyStr.length / speed, {
-                    text: messageBodyStr,
-                    ease: Linear.easeNone,
-                    onUpdate: function onUpdate() {
 
-                        if (this.target[0].textContent.length > 15) {
-                            TweenLite.to('.input-i-message', 1, { width: '90%' });
-                        }
-
-                        this.target[0].textContent += character;
-                    },
-                    onComplete: function onComplete() {
-
-                        $('.i-message-list').append('<div class="i-message-list-item">' + messageBodyStr + '</div>');
-
-                        // this.target[0].textContent = messageBodyStr
-                    }
-                }, '+=0.5');
-                //makes it flash at the end
-
+                $('.send').on('click', function () {
+                    $('.i-message-list').append('<div class="i-message-list-item">' + messageBodyStr + '</div>');
+                });
             }
         }]);
 

@@ -43,18 +43,19 @@ section {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 70%;
+  width: 90%;
 }
 
 .i-message-list {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .i-message-list-item {
-  //position: absolute;
-  //left: 0;
-  //top: 0;
+  background: #0bc7ff;
+  border-radius: 5px;
+
 }
 
 

@@ -188,16 +188,25 @@ section {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 70%;
+  width: 90%;
 }
 
 .i-message-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.i-message-list-item {
+  background: #0bc7ff;
+  border-radius: 5px;
 }
 
 .section-intro {
