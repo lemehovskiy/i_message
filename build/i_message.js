@@ -103,6 +103,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             self.data_options = self.$element.data('i-message');
             self.settings = $.extend(true, self.settings, self.data_options);
 
+            self.$input_wrap = $('.input-wrap');
+            self.$input = $('.input-i-message');
+
+            self.$btn_send = $('.btn-send');
+
             self.init();
         }
 
@@ -110,71 +115,96 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'init',
             value: function init() {
 
+                var self = this;
+            }
+        }, {
+            key: 'send_outgoing_message',
+            value: function send_outgoing_message() {
+
+                var self = this;
+
                 var messageBodyStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
                 var speed = 30;
-                var endFlashSpeed = 0.3;
                 var character = "|";
 
-                var $input = $('.input-i-message');
+                self.$input.text('');
 
-                $('.send').on('click', function () {
+                self.$btn_send.addClass('active');
 
-                    $('.input-i-message').text('');
+                var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
 
-                    var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+                $('.i-message-list').append($outgoing_message_spacer);
 
-                    $('.i-message-list').append($outgoing_message_spacer);
+                var extra_btn_tl = new TimelineMax();
+                extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, { x: -40, opacity: 0 });
+                extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, { x: -40, opacity: 0 }, '-=0.2');
+                extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, { x: -40, opacity: 1 }, '-=0.2');
 
-                    var typingTl = new TimelineMax();
-                    typingTl.to('.input-i-message', messageBodyStr.length / speed, {
-                        text: messageBodyStr,
-                        ease: Linear.easeNone,
-                        onUpdate: function onUpdate() {
+                extra_btn_tl.pause();
 
-                            if (this.target[0].textContent.length > 15) {
-                                TweenLite.to('.input-i-message', 0.5, { width: '90%' });
-                            }
+                var typingTl = new TimelineMax();
+                typingTl.to('.input-i-message', messageBodyStr.length / speed, {
+                    text: messageBodyStr,
+                    ease: Linear.easeNone,
 
-                            TweenLite.to($outgoing_message_spacer, .4, { height: $input.outerHeight() });
+                    onUpdate: function onUpdate() {
 
-                            this.target[0].textContent += character;
-                        },
-                        onComplete: function onComplete() {
+                        if (this.target[0].textContent.length > 15) {
+                            TweenLite.to(self.$input_wrap, 0.5, { width: '80%' });
 
-                            var input_offset = $input.offset();
-
-                            var $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
-                            $outgoing_message_spacer.append($outgoing_message);
-
-                            var $status_wrap = $("<div class='status-wrap'>Delivered</div>");
-                            $outgoing_message_spacer.append($status_wrap);
-
-                            var message_offset = $outgoing_message.offset();
-
-                            $input.text('Message');
-
-                            TweenLite.to($input, 0.4, { height: 'auto', width: '77%' });
-                            TweenLite.from($outgoing_message, 0.4, {
-                                x: input_offset.left - message_offset.left,
-                                y: input_offset.top - message_offset.top,
-                                backgroundColor: "transparent",
-                                onComplete: function onComplete() {
-                                    TweenLite.set($outgoing_message_spacer, { height: 'auto' });
-
-                                    var status_tl = new TimelineLite();
-                                    status_tl.to($status_wrap, 0.3, { height: 14 });
-                                    status_tl.to($status_wrap, 0.4, { opacity: 1 });
-
-                                    var $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
-                                    var old_status_messages_tl = new TimelineLite();
-
-                                    old_status_messages_tl.to($old_status_messages, 0.4, { opacity: 0 });
-                                    old_status_messages_tl.to($old_status_messages, 0.3, { height: 0 });
-                                }
-                            });
+                            extra_btn_tl.play();
                         }
-                    });
+
+                        TweenLite.to($outgoing_message_spacer, .4, { height: self.$input.outerHeight() });
+
+                        this.target[0].textContent += character;
+                    },
+                    onComplete: function onComplete() {
+
+                        var input_offset = self.$input.offset();
+
+                        var $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
+                        $outgoing_message_spacer.append($outgoing_message);
+
+                        var $status_wrap = $("<div class='status-wrap'>Delivered</div>");
+                        $outgoing_message_spacer.append($status_wrap);
+
+                        var message_offset = $outgoing_message.offset();
+
+                        self.set_placeholder();
+
+                        TweenLite.to(self.$input_wrap, 0.4, { height: 'auto', width: '60%' });
+                        TweenLite.from($outgoing_message, 0.4, {
+                            x: input_offset.left - message_offset.left,
+                            y: input_offset.top - message_offset.top,
+                            backgroundColor: "transparent",
+                            onComplete: function onComplete() {
+                                TweenLite.set($outgoing_message_spacer, { height: 'auto' });
+
+                                var status_tl = new TimelineLite();
+                                status_tl.to($status_wrap, 0.3, { height: 14 });
+                                status_tl.to($status_wrap, 0.4, { opacity: 1 });
+
+                                var $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
+                                var old_status_messages_tl = new TimelineLite();
+
+                                old_status_messages_tl.to($old_status_messages, 0.4, { opacity: 0 });
+                                old_status_messages_tl.to($old_status_messages, 0.3, { height: 0 });
+
+                                extra_btn_tl.reverse();
+                            }
+                        });
+                    }
                 });
+            }
+        }, {
+            key: 'set_placeholder',
+            value: function set_placeholder() {
+                var self = this;
+
+                self.$input.text('Message');
+
+                self.$btn_send.removeClass('active');
             }
         }]);
 

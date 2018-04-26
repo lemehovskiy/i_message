@@ -50,6 +50,13 @@ section {
 
 }
 
+.btn {
+  background: grey;
+  color: white;
+  display: inline-block;
+  padding: 8px;
+}
+
 .i-message-demo {
   font-size: 14px;
   background: grey;
@@ -67,20 +74,52 @@ section {
     padding: 5px;
   }
 
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
   .status-wrap {
     height: 0;
     opacity: 0;
     text-align: right;
   }
+
+  .btn-send {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    transition: .5s;
+
+    &.active {
+      background: blue;
+
+    }
+  }
+  .extra-buttons-group {
+    white-space: nowrap;
+  }
+  .extra-button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: inline-block;
+
+    &:nth-child(3) {
+      opacity: 0;
+    }
+  }
 }
 
-.input-i-message {
+.input-wrap {
   border: 1px solid white;
   border-radius: 5px;
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 77%;
+  right: 10px;
+  bottom: 10px;
+  width: 60%;
   padding: 5px 35px 5px 5px;
 }
 

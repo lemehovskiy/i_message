@@ -192,6 +192,13 @@ section {
   padding: 170% 0 0;
 }
 
+.btn {
+  background: grey;
+  color: white;
+  display: inline-block;
+  padding: 8px;
+}
+
 .i-message-demo {
   font-size: 14px;
   background: grey;
@@ -211,19 +218,58 @@ section {
   padding: 5px;
 }
 
+.i-message-demo .input-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 10px;
+}
+
 .i-message-demo .status-wrap {
   height: 0;
   opacity: 0;
   text-align: right;
 }
 
-.input-i-message {
+.i-message-demo .btn-send {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  -webkit-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+}
+
+.i-message-demo .btn-send.active {
+  background: blue;
+}
+
+.i-message-demo .extra-buttons-group {
+  white-space: nowrap;
+}
+
+.i-message-demo .extra-button {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.i-message-demo .extra-button:nth-child(3) {
+  opacity: 0;
+}
+
+.input-wrap {
   border: 1px solid white;
   border-radius: 5px;
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 77%;
+  right: 10px;
+  bottom: 10px;
+  width: 60%;
   padding: 5px 35px 5px 5px;
 }
 
@@ -255,7 +301,6 @@ section {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: white;
 }
 
 .section-intro .container {
