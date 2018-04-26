@@ -74,6 +74,19 @@ section {
     padding: 5px;
   }
 
+  .incoming-message-spacer {
+    width: 69%;
+    height: 0;
+    margin: 10px 0 0;
+
+    .incoming-message {
+      opacity: 0;
+      background: #ff4d52;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  }
+
   .input-row {
     display: flex;
     justify-content: space-between;

@@ -7087,7 +7087,7 @@ $(document).ready(function () {
 
     $('.i-message-demo').iMessage('play');
 
-    $('.i-message-demo').iMessage('update_timescale', 2);
+    $('.i-message-demo').iMessage('update_timescale', 10);
 
     // $('.btn-send-outgoing-message').on('click', function(){
     //     $('.i-message-demo').iMessage('send_outgoing_message');
@@ -12181,7 +12181,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function play() {
                 var self = this;
 
-                self.master_tl.add(self.send_outgoing_message()).add(self.send_outgoing_message(), 2).add(self.send_outgoing_message(), 5);
+                self.master_tl.add(self.send_outgoing_message()).add(self.receive_message(), 3).add(self.send_outgoing_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12);
             }
         }, {
             key: 'update_timescale',
@@ -12216,7 +12216,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         onUpdate: function onUpdate() {
 
                             if (this.target[0].textContent.length > 15 && !self.is_input_wide) {
-                                console.log('asdf');
                                 TweenLite.to(self.$input_wrap, 0.5, { width: '80%' });
                                 self.switch_extra_buttons();
                             }
@@ -12234,6 +12233,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         self.send_animation($outgoing_message_spacer, messageBodyStr);
                     });
                 });
+
+                return main_tl;
+            }
+        }, {
+            key: 'receive_message',
+            value: function receive_message() {
+                var self = this;
+
+                var message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+
+                var speed = 30;
+
+                var main_tl = new TimelineMax();
+
+                var $incoming_message_spacer = $("<div class='incoming-message-spacer'></div>");
+
+                var $incoming_message = $("<div class='incoming-message'>" + message + "</div>");
+
+                $('.i-message-list').append($incoming_message_spacer);
+                $incoming_message_spacer.append($incoming_message);
+
+                main_tl.add(function () {
+                    $('.i-message-list').append($incoming_message_spacer);
+                    $incoming_message_spacer.append($incoming_message);
+                });
+
+                main_tl.to($incoming_message_spacer, 1, { height: $incoming_message.outerHeight() });
+
+                main_tl.to($incoming_message, 1, { opacity: 1 });
 
                 return main_tl;
             }

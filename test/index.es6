@@ -17,7 +17,7 @@ $(document).ready(function () {
     $('.i-message-demo').iMessage('play');
 
 
-    $('.i-message-demo').iMessage('update_timescale', 2);
+    $('.i-message-demo').iMessage('update_timescale', 10);
 
 
 

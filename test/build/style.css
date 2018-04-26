@@ -218,6 +218,19 @@ section {
   padding: 5px;
 }
 
+.i-message-demo .incoming-message-spacer {
+  width: 69%;
+  height: 0;
+  margin: 10px 0 0;
+}
+
+.i-message-demo .incoming-message-spacer .incoming-message {
+  opacity: 0;
+  background: #ff4d52;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .i-message-demo .input-row {
   display: -webkit-box;
   display: -ms-flexbox;
