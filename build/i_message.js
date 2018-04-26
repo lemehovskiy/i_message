@@ -110,35 +110,70 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'init',
             value: function init() {
 
-                var messageBodyStr = 'This is a typewriter effect using GreenSock\'s TextPlugin and an onUpdate hack.';
-                // const speed = 30;
-                // const endFlashSpeed = 0.3;
-                // const character = "|";
-                //
-                // let typingTl = new TimelineMax();
-                // typingTl.to('.input-i-message', messageBodyStr.length/speed, {
-                //         text:messageBodyStr,
-                //         ease:Linear.easeNone,
-                //         onUpdate:function(){
-                //
-                //             if (this.target[0].textContent.length > 15) {
-                //                 TweenLite.to('.input-i-message', 1, {width: '90%'});
-                //             }
-                //
-                //             this.target[0].textContent += character
-                //
-                //         },
-                //         onComplete:function(){
-                //
-                //
-                //             // this.target[0].textContent = messageBodyStr
-                //         }
-                //     },'+=0.5')
-                //     //makes it flash at the end
+                var messageBodyStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+                var speed = 30;
+                var endFlashSpeed = 0.3;
+                var character = "|";
 
+                var $input = $('.input-i-message');
 
                 $('.send').on('click', function () {
-                    $('.i-message-list').append('<div class="i-message-list-item">' + messageBodyStr + '</div>');
+
+                    $('.input-i-message').text('');
+
+                    var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+                    $('.i-message-list').append($outgoing_message_spacer);
+
+                    var typingTl = new TimelineMax();
+                    typingTl.to('.input-i-message', messageBodyStr.length / speed, {
+                        text: messageBodyStr,
+                        ease: Linear.easeNone,
+                        onUpdate: function onUpdate() {
+
+                            if (this.target[0].textContent.length > 15) {
+                                TweenLite.to('.input-i-message', 0.5, { width: '90%' });
+                            }
+
+                            TweenLite.to($outgoing_message_spacer, .4, { height: $input.outerHeight() });
+
+                            this.target[0].textContent += character;
+                        },
+                        onComplete: function onComplete() {
+
+                            var input_offset = $input.offset();
+
+                            var $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
+                            $outgoing_message_spacer.append($outgoing_message);
+
+                            var $status_wrap = $("<div class='status-wrap'>Delivered</div>");
+                            $outgoing_message_spacer.append($status_wrap);
+
+                            var message_offset = $outgoing_message.offset();
+
+                            $input.text('Message');
+
+                            TweenLite.to($input, 0.4, { height: 'auto', width: '77%' });
+                            TweenLite.from($outgoing_message, 0.4, {
+                                x: input_offset.left - message_offset.left,
+                                y: input_offset.top - message_offset.top,
+                                backgroundColor: "transparent",
+                                onComplete: function onComplete() {
+                                    TweenLite.set($outgoing_message_spacer, { height: 'auto' });
+
+                                    var status_tl = new TimelineLite();
+                                    status_tl.to($status_wrap, 0.3, { height: 14 });
+                                    status_tl.to($status_wrap, 0.4, { opacity: 1 });
+
+                                    var $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
+                                    var old_status_messages_tl = new TimelineLite();
+
+                                    old_status_messages_tl.to($old_status_messages, 0.4, { opacity: 0 });
+                                    old_status_messages_tl.to($old_status_messages, 0.3, { height: 0 });
+                                }
+                            });
+                        }
+                    });
                 });
             }
         }]);

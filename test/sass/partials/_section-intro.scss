@@ -10,23 +10,4 @@
   .container {
     width: 100%;
   }
-
-  .i-message-demo-wrap {
-    width: 100%;
-    max-width: 300px;
-    margin: auto;
-
-    .rect-outer {
-      padding: 170% 0 0;
-    }
-
-    .i-message-demo {
-      background: grey;
-    }
-
-    .i-message-list {
-      width: 100%;
-      height: calc(100% - 50px);
-    }
-  }
 }

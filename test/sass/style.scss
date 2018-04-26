@@ -37,25 +37,60 @@ section {
   }
 }
 
+
+
+.i-message-demo-wrap {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+
+  .rect-outer {
+    padding: 170% 0 0;
+  }
+
+}
+
+.i-message-demo {
+  font-size: 14px;
+  background: grey;
+
+
+  .outgoing-message-spacer {
+    width: 69%;
+    align-self: flex-end;
+    margin: 10px 0 0;
+  }
+  .outgoing-message {
+    margin: 0 0 0 auto;
+    background: #0bc7ff;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .status-wrap {
+    height: 0;
+    opacity: 0;
+    text-align: right;
+  }
+}
+
 .input-i-message {
   border: 1px solid white;
   border-radius: 5px;
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 90%;
+  width: 77%;
+  padding: 5px 35px 5px 5px;
 }
 
 .i-message-list {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-}
-
-.i-message-list-item {
-  background: #0bc7ff;
-  border-radius: 5px;
-
+  padding: 0 10px;
+  width: 100%;
+  height: calc(100% - 50px);
 }
 
 
