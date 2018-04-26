@@ -17,8 +17,12 @@ $(document).ready(function () {
     $('.i-message-demo').iMessage('play');
 
 
+    $('.i-message-demo').iMessage('update_timescale', 2);
 
-    $('.btn-send-outgoing-message').on('click', function(){
-        $('.i-message-demo').iMessage('send_outgoing_message');
-    })
+
+
+
+    // $('.btn-send-outgoing-message').on('click', function(){
+    //     $('.i-message-demo').iMessage('send_outgoing_message');
+    // })
 });

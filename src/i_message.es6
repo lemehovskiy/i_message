@@ -34,6 +34,10 @@
 
             self.$btn_send = $('.btn-send');
 
+            self.master_tl = new TimelineMax();
+
+            self.is_input_wide = false;
+
             self.init();
         }
 
@@ -42,28 +46,23 @@
             let self = this;
         }
 
-        play(){
+        play() {
             let self = this;
 
-            var master_tl = new TimelineMax();
-
-            master_tl.add(self.send_outgoing_message())
-                    .add(self.send_outgoing_message());
-
+            self.master_tl
+                .add(self.send_outgoing_message())
+                .add(self.send_outgoing_message(), 2)
+                .add(self.send_outgoing_message(), 5);
         }
 
-        sample_func(){
+        update_timescale(timescale) {
+
             let self = this;
 
-            let test_tl = new TimelineMax();
-
-
-            return test_tl;
-
-
+            self.master_tl.timeScale(timescale);
         }
 
-        send_outgoing_message(){
+        send_outgoing_message() {
 
             let self = this;
 
@@ -71,93 +70,121 @@
             const speed = 30;
             const character = "|";
 
-
-            console.log('asd');
-
-            self.$input.text('');
-
-
-            self.$btn_send.addClass('active');
-
-
             let $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
 
-            $('.i-message-list').append($outgoing_message_spacer)
+            let main_tl = new TimelineMax();
 
 
-            let extra_btn_tl = new TimelineMax();
-            extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: -20, opacity: 0})
-            extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: -20, opacity: 0}, '-=0.2')
-            extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: -40, opacity: 1}, '-=0.2')
+            main_tl.add(function () {
+                self.$btn_send.addClass('active');
+                $('.i-message-list').append($outgoing_message_spacer)
 
-            extra_btn_tl.pause();
+                main_tl.to('.input-i-message', messageBodyStr.length / speed, {
+                    text: messageBodyStr,
+                    ease: Linear.easeNone,
 
-            let typingTl = new TimelineMax();
+                    onUpdate: function () {
+
+                        if (this.target[0].textContent.length > 15 && !(self.is_input_wide)) {
+                            console.log('asdf');
+                            TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
+                            self.switch_extra_buttons();
+                        }
+
+                        TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
+
+                        this.target[0].textContent += character
+
+                    }
+                })
+
+                main_tl.add(function () {
+                    self.set_placeholder()
+                })
+                main_tl.add(function () {
+                    self.send_animation($outgoing_message_spacer, messageBodyStr)
+                })
+            })
+
+            return main_tl;
+
+        }
+
+        send_animation($outgoing_message_spacer, messageBodyStr) {
+
+            let self = this;
 
             let send_animation_tl = new TimelineMax();
 
-            typingTl.to('.input-i-message', messageBodyStr.length / speed, {
-                text: messageBodyStr,
-                ease: Linear.easeNone,
+            let input_offset = self.$input.offset();
 
-                onUpdate: function () {
-
-                    if (this.target[0].textContent.length > 15) {
-                        TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
-
-                        extra_btn_tl.play();
-                    }
-
-                    TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
-
-                    this.target[0].textContent += character
-
-                },
-                onComplete: function () {
-
-                    let input_offset = self.$input.offset();
-
-                    let $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
-                    $outgoing_message_spacer.append($outgoing_message);
+            let $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
+            $outgoing_message_spacer.append($outgoing_message);
 
 
-                    let $status_wrap = $("<div class='status-wrap'>Delivered</div>");
-                    $outgoing_message_spacer.append($status_wrap);
+            let $status_wrap = $("<div class='status-wrap'>Delivered</div>");
+            $outgoing_message_spacer.append($status_wrap);
 
 
-                    let message_offset = $outgoing_message.offset();
+            let message_offset = $outgoing_message.offset();
 
-                    self.set_placeholder();
+            send_animation_tl.to(self.$input_wrap, 0.4, {height: 'auto', width: '60%'})
+            send_animation_tl.from($outgoing_message, 0.4, {
+                x: input_offset.left - message_offset.left,
+                y: input_offset.top - message_offset.top,
+                backgroundColor: "transparent"
+            }, '-=0.4')
 
-
-                    TweenLite.to(self.$input_wrap, 0.4, {height: 'auto', width: '60%'})
-                    TweenLite.from($outgoing_message, 0.4, {
-                        x: input_offset.left - message_offset.left,
-                        y: input_offset.top - message_offset.top,
-                        backgroundColor: "transparent",
-                        onComplete: function(){
-
-                            extra_btn_tl.reverse();
-
-                            TweenLite.set($outgoing_message_spacer, {height: 'auto'})
-
-                            let status_tl = new TimelineLite();
-                            status_tl.to($status_wrap, 0.3, {height: 14})
-                            status_tl.to($status_wrap, 0.4, {opacity: 1})
-
-                            let $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
-                            let old_status_messages_tl = new TimelineMax();
-
-                            old_status_messages_tl.to($old_status_messages, 0.4, {opacity: 0})
-                            old_status_messages_tl.to($old_status_messages, 0.3, {height: 0})
-
-                        }
-                    })
-                }
+            send_animation_tl.add(function () {
+                self.switch_extra_buttons_reverse();
             })
+
+
+            send_animation_tl.set($outgoing_message_spacer, {height: 'auto'})
+
+            send_animation_tl.to($status_wrap, 0.3, {height: 14})
+            send_animation_tl.to($status_wrap, 0.4, {opacity: 1}, '-=0.1')
+
+            let $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
+
+            send_animation_tl.to($old_status_messages, 0.4, {opacity: 0}, '-=0.3')
+            send_animation_tl.to($old_status_messages, 0.3, {height: 0}, '-=0.1')
+
+
+            return send_animation_tl;
         }
 
-        set_placeholder(){
+        switch_extra_buttons_reverse() {
+
+            let self = this;
+
+            let extra_btn_tl = new TimelineMax();
+
+            self.is_input_wide = false;
+
+            extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: 0, opacity: 0})
+            extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: 0, opacity: 1}, '-=0.2')
+            extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: 0, opacity: 1}, '-=0.2')
+
+            return extra_btn_tl;
+        }
+
+        switch_extra_buttons() {
+
+            let self = this;
+
+            self.is_input_wide = true;
+
+            let extra_btn_tl = new TimelineMax();
+
+            extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: -10, opacity: 0})
+            extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: -10, opacity: 0}, '-=0.2')
+            extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: -40, opacity: 1}, '-=0.2')
+
+            return extra_btn_tl;
+        }
+
+        set_placeholder() {
             let self = this;
 
             self.$input.text('Message');
