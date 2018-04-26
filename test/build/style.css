@@ -259,8 +259,8 @@ section {
   content: '\E807';
   position: absolute;
   left: -4px;
-  bottom: -3px;
-  font-size: 30px;
+  bottom: 0px;
+  font-size: 9px;
   color: #E5E5EA;
 }
 
@@ -319,6 +319,7 @@ section {
 .i-message-demo .extra-buttons-group {
   white-space: nowrap;
   position: relative;
+  bottom: 3px;
 }
 
 .i-message-demo .extra-button {
