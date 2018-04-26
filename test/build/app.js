@@ -12181,7 +12181,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function play() {
                 var self = this;
 
-                self.master_tl.add(self.send_outgoing_message()).add(self.receive_message(), 3).add(self.send_outgoing_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12);
+                self.master_tl.add(self.send_outgoing_message()).add(self.receive_message(), 3).add(self.send_outgoing_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12).add(self.send_outgoing_message(), 15).add(self.send_outgoing_message(), 18);
             }
         }, {
             key: 'update_timescale',

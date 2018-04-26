@@ -59,6 +59,10 @@
                 .add(self.receive_message(), 9)
 
                 .add(self.receive_message(), 12)
+
+                .add(self.send_outgoing_message(), 15)
+
+                .add(self.send_outgoing_message(), 18)
         }
 
         update_timescale(timescale) {
