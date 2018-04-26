@@ -109,6 +109,9 @@
                         y: input_offset.top - message_offset.top,
                         backgroundColor: "transparent",
                         onComplete: function(){
+
+                            extra_btn_tl.reverse();
+
                             TweenLite.set($outgoing_message_spacer, {height: 'auto'})
 
                             let status_tl = new TimelineLite();
@@ -120,8 +123,6 @@
 
                             old_status_messages_tl.to($old_status_messages, 0.4, {opacity: 0})
                             old_status_messages_tl.to($old_status_messages, 0.3, {height: 0})
-
-                            extra_btn_tl.reverse();
 
                         }
                     })

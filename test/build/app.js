@@ -22366,6 +22366,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                             y: input_offset.top - message_offset.top,
                             backgroundColor: "transparent",
                             onComplete: function onComplete() {
+
+                                extra_btn_tl.reverse();
+
                                 TweenLite.set($outgoing_message_spacer, { height: 'auto' });
 
                                 var status_tl = new TimelineLite();
@@ -22377,8 +22380,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                                 old_status_messages_tl.to($old_status_messages, 0.4, { opacity: 0 });
                                 old_status_messages_tl.to($old_status_messages, 0.3, { height: 0 });
-
-                                extra_btn_tl.reverse();
                             }
                         });
                     }
