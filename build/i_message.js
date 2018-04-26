@@ -118,6 +118,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var self = this;
             }
         }, {
+            key: 'play',
+            value: function play() {
+                var self = this;
+
+                var master_tl = new TimelineMax();
+
+                master_tl.add(self.send_outgoing_message()).add(self.send_outgoing_message());
+            }
+        }, {
+            key: 'sample_func',
+            value: function sample_func() {
+                var self = this;
+
+                var test_tl = new TimelineMax();
+
+                return test_tl;
+            }
+        }, {
             key: 'send_outgoing_message',
             value: function send_outgoing_message() {
 
@@ -126,6 +144,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var messageBodyStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
                 var speed = 30;
                 var character = "|";
+
+                console.log('asd');
 
                 self.$input.text('');
 
@@ -136,13 +156,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 $('.i-message-list').append($outgoing_message_spacer);
 
                 var extra_btn_tl = new TimelineMax();
-                extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, { x: -40, opacity: 0 });
-                extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, { x: -40, opacity: 0 }, '-=0.2');
+                extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, { x: -20, opacity: 0 });
+                extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, { x: -20, opacity: 0 }, '-=0.2');
                 extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, { x: -40, opacity: 1 }, '-=0.2');
 
                 extra_btn_tl.pause();
 
                 var typingTl = new TimelineMax();
+
+                var send_animation_tl = new TimelineMax();
+
                 typingTl.to('.input-i-message', messageBodyStr.length / speed, {
                     text: messageBodyStr,
                     ease: Linear.easeNone,
@@ -189,7 +212,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                                 status_tl.to($status_wrap, 0.4, { opacity: 1 });
 
                                 var $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
-                                var old_status_messages_tl = new TimelineLite();
+                                var old_status_messages_tl = new TimelineMax();
 
                                 old_status_messages_tl.to($old_status_messages, 0.4, { opacity: 0 });
                                 old_status_messages_tl.to($old_status_messages, 0.3, { height: 0 });

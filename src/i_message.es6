@@ -42,6 +42,27 @@
             let self = this;
         }
 
+        play(){
+            let self = this;
+
+            var master_tl = new TimelineMax();
+
+            master_tl.add(self.send_outgoing_message())
+                    .add(self.send_outgoing_message());
+
+        }
+
+        sample_func(){
+            let self = this;
+
+            let test_tl = new TimelineMax();
+
+
+            return test_tl;
+
+
+        }
+
         send_outgoing_message(){
 
             let self = this;
@@ -50,6 +71,8 @@
             const speed = 30;
             const character = "|";
 
+
+            console.log('asd');
 
             self.$input.text('');
 
@@ -63,13 +86,16 @@
 
 
             let extra_btn_tl = new TimelineMax();
-            extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: -40, opacity: 0})
-            extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: -40, opacity: 0}, '-=0.2')
+            extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: -20, opacity: 0})
+            extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: -20, opacity: 0}, '-=0.2')
             extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: -40, opacity: 1}, '-=0.2')
 
             extra_btn_tl.pause();
 
             let typingTl = new TimelineMax();
+
+            let send_animation_tl = new TimelineMax();
+
             typingTl.to('.input-i-message', messageBodyStr.length / speed, {
                 text: messageBodyStr,
                 ease: Linear.easeNone,
@@ -103,6 +129,7 @@
 
                     self.set_placeholder();
 
+
                     TweenLite.to(self.$input_wrap, 0.4, {height: 'auto', width: '60%'})
                     TweenLite.from($outgoing_message, 0.4, {
                         x: input_offset.left - message_offset.left,
@@ -119,7 +146,7 @@
                             status_tl.to($status_wrap, 0.4, {opacity: 1})
 
                             let $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
-                            let old_status_messages_tl = new TimelineLite();
+                            let old_status_messages_tl = new TimelineMax();
 
                             old_status_messages_tl.to($old_status_messages, 0.4, {opacity: 0})
                             old_status_messages_tl.to($old_status_messages, 0.3, {height: 0})
