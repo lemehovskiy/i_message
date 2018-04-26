@@ -7085,13 +7085,15 @@ $(document).ready(function () {
 
     $('.i-message-demo').iMessage();
 
-    $('.i-message-demo').iMessage('play');
+    $('.play-btn').on('click', function () {
+        $('.i-message-demo').iMessage('play');
 
-    $('.i-message-demo').iMessage('update_timescale', 10);
+        $(this).fadeOut();
+    });
 
-    // $('.btn-send-outgoing-message').on('click', function(){
-    //     $('.i-message-demo').iMessage('send_outgoing_message');
-    // })
+    $('.timescale-btn').on('click', function () {
+        $('.i-message-demo').iMessage('update_timescale', 10);
+    });
 });
 
 /***/ }),
@@ -12259,9 +12261,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     $incoming_message_spacer.append($incoming_message);
                 });
 
-                main_tl.to($incoming_message_spacer, 1, { height: $incoming_message.outerHeight() });
+                main_tl.to($incoming_message_spacer, 0.5, { height: $incoming_message.outerHeight() });
 
-                main_tl.to($incoming_message, 1, { opacity: 1 });
+                main_tl.to($incoming_message, 0.5, { opacity: 1 }, '-=0.2');
 
                 return main_tl;
             }

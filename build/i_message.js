@@ -204,9 +204,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     $incoming_message_spacer.append($incoming_message);
                 });
 
-                main_tl.to($incoming_message_spacer, 1, { height: $incoming_message.outerHeight() });
+                main_tl.to($incoming_message_spacer, 0.5, { height: $incoming_message.outerHeight() });
 
-                main_tl.to($incoming_message, 1, { opacity: 1 });
+                main_tl.to($incoming_message, 0.5, { opacity: 1 }, '-=0.2');
 
                 return main_tl;
             }

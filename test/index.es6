@@ -14,15 +14,15 @@ $(document).ready(function () {
     $('.i-message-demo').iMessage();
 
 
-    $('.i-message-demo').iMessage('play');
 
+    $('.play-btn').on('click', function(){
+        $('.i-message-demo').iMessage('play');
 
-    $('.i-message-demo').iMessage('update_timescale', 10);
+        $(this).fadeOut();
+    })
 
-
-
-
-    // $('.btn-send-outgoing-message').on('click', function(){
-    //     $('.i-message-demo').iMessage('send_outgoing_message');
-    // })
+    $('.timescale-btn').on('click', function(){
+        $('.i-message-demo').iMessage('update_timescale', 10);
+    })
+    
 });
