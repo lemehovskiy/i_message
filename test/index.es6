@@ -17,7 +17,6 @@ $(document).ready(function () {
 
     $('.play-btn').on('click', function(){
         $('.i-message-demo').iMessage('play');
-
         $(this).fadeOut();
     })
 

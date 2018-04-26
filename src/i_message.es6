@@ -50,19 +50,19 @@
             let self = this;
 
             self.master_tl
-                .add(self.send_outgoing_message())
+                .add(self.send_message(1))
 
                 .add(self.receive_message(), 3)
 
-                .add(self.send_outgoing_message(), 6)
+                .add(self.send_message(), 6)
 
                 .add(self.receive_message(), 9)
 
                 .add(self.receive_message(), 12)
 
-                .add(self.send_outgoing_message(), 15)
+                .add(self.send_message(), 15)
 
-                .add(self.send_outgoing_message(), 18)
+                .add(self.send_message(), 18)
         }
 
         update_timescale(timescale) {
@@ -71,7 +71,8 @@
 
             self.master_tl.timeScale(timescale);
         }
-        send_outgoing_message() {
+
+        send_message() {
 
             let self = this;
 
@@ -85,40 +86,43 @@
 
 
             main_tl.add(function () {
+
+                self.$input.text('');
                 self.$btn_send.addClass('active');
                 $('.i-message-list').append($outgoing_message_spacer)
+            })
 
-                main_tl.to('.input-i-message', messageBodyStr.length / speed, {
-                    text: messageBodyStr,
-                    ease: Linear.easeNone,
+            main_tl.to('.input-i-message', messageBodyStr.length / speed, {
+                text: messageBodyStr,
+                ease: Linear.easeNone,
 
-                    onUpdate: function () {
+                onUpdate: function () {
 
-                        if (this.target[0].textContent.length > 15 && !(self.is_input_wide)) {
-                            TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
-                            self.switch_extra_buttons();
-                        }
-
-                        TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
-
-                        this.target[0].textContent += character
-
+                    if (this.target[0].textContent.length > 15 && !(self.is_input_wide)) {
+                        TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
+                        self.switch_extra_buttons();
                     }
-                })
 
-                main_tl.add(function () {
-                    self.set_placeholder()
-                })
-                main_tl.add(function () {
-                    self.send_animation($outgoing_message_spacer, messageBodyStr)
-                })
+                    TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
+
+                    console.log(this.target[0].textContent);
+                    this.target[0].textContent += character
+
+                }
+            })
+
+            main_tl.add(function () {
+                self.set_placeholder()
+            })
+            main_tl.add(function () {
+                self.send_animation($outgoing_message_spacer, messageBodyStr)
             })
 
             return main_tl;
 
         }
 
-        receive_message(){
+        receive_message() {
             let self = this;
 
             const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
@@ -129,12 +133,12 @@
 
             let $incoming_message_spacer = $("<div class='incoming-message-spacer'></div>");
 
-            let $incoming_message = $("<div class='incoming-message'>"+ message +"</div>");
+            let $incoming_message = $("<div class='incoming-message'>" + message + "</div>");
 
             $('.i-message-list').append($incoming_message_spacer);
             $incoming_message_spacer.append($incoming_message);
 
-            main_tl.add(function() {
+            main_tl.add(function () {
                 $('.i-message-list').append($incoming_message_spacer);
                 $incoming_message_spacer.append($incoming_message);
             })
