@@ -89,6 +89,7 @@
 
                 self.$input.text('');
                 self.$btn_send.addClass('active');
+                self.$input.addClass('active');
                 $('.i-message-list').append($outgoing_message_spacer)
             })
 
@@ -105,7 +106,6 @@
 
                     TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
 
-                    console.log(this.target[0].textContent);
                     this.target[0].textContent += character
 
                 }
@@ -170,11 +170,11 @@
 
             let message_offset = $outgoing_message.offset();
 
-            send_animation_tl.to(self.$input_wrap, 0.4, {height: 'auto', width: '60%'})
+            send_animation_tl.to(self.$input_wrap, 0.4, {height: 'auto', width: '64%'})
             send_animation_tl.from($outgoing_message, 0.4, {
                 x: input_offset.left - message_offset.left,
                 y: input_offset.top - message_offset.top,
-                backgroundColor: "transparent"
+                opacity: 0
             }, '-=0.4')
 
             send_animation_tl.add(function () {
@@ -221,7 +221,7 @@
 
             extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, {x: -10, opacity: 0})
             extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, {x: -10, opacity: 0}, '-=0.2')
-            extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: -40, opacity: 1}, '-=0.2')
+            extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, {x: -43, opacity: 1}, '-=0.2')
 
             return extra_btn_tl;
         }
@@ -229,7 +229,9 @@
         set_placeholder() {
             let self = this;
 
-            self.$input.text('Message');
+            self.$input.text('iMessage');
+
+            self.$input.removeClass('active');
 
             self.$btn_send.removeClass('active');
         }
