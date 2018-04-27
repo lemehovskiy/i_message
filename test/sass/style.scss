@@ -1,15 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,600');
-
 @import "_reset.scss";
 @import "mixins.scss";
-
 
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   background: grey;
 }
-
 
 .back-img {
   background-size: cover;
@@ -38,6 +35,20 @@ section {
   }
 }
 
+.section-spacer-1 {
+  min-height: 100vh;
+  background: #279fff;
+}
+
+.section-spacer-2 {
+  height: 300px;
+  background: #2b8061;
+}
+
+.section-spacer-3 {
+  height: 600px;
+  background: #eeb062;
+}
 
 $main-blue: #007AFF;
 $main-grey: #858E98;
@@ -168,7 +179,6 @@ $main-grey: #858E98;
         display: none;
       }
 
-
     }
   }
   .extra-buttons-group {
@@ -217,6 +227,5 @@ $main-grey: #858E98;
   width: 100%;
   height: calc(100% - 50px);
 }
-
 
 @import "partials/section-intro";

@@ -174,6 +174,7 @@
             send_animation_tl.from($outgoing_message, 0.4, {
                 x: input_offset.left - message_offset.left,
                 y: input_offset.top - message_offset.top,
+                scale: 0.7,
                 opacity: 0
             }, '-=0.4')
 
