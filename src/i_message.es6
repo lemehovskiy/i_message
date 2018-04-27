@@ -52,7 +52,11 @@
             self.master_tl
                 .add(self.send_message(1))
 
-                .add(self.receive_message(), 3)
+                .add(self.receive_message(), "+=0")
+
+                .addCallback(function(){
+                    console.log('asdf');
+                })
 
                 .add(self.send_message(), 6)
 

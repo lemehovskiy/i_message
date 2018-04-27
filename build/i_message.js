@@ -126,7 +126,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function play() {
                 var self = this;
 
-                self.master_tl.add(self.send_message(1)).add(self.receive_message(), 3).add(self.send_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12).add(self.send_message(), 15).add(self.send_message(), 18);
+                self.master_tl.add(self.send_message(1)).add(self.receive_message(), "+=0").addCallback(function () {
+                    console.log('asdf');
+                }).add(self.send_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12).add(self.send_message(), 15).add(self.send_message(), 18);
             }
         }, {
             key: 'update_timescale',
