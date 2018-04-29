@@ -37,11 +37,23 @@
 
             self.is_input_wide = false;
 
+            self.messages = [];
+
             self.init();
         }
 
         init() {
             let self = this;
+        }
+
+        clear(){
+            let self = this;
+
+            self.messages.forEach(function(message){
+                message.$spacer.remove();
+            })
+
+            self.messages = [];
         }
 
         play_dialog(messages) {
@@ -84,6 +96,11 @@
 
             let $incoming_message = $("<div class='incoming-message'>" + message.text + "</div>");
 
+            self.messages.push({
+                type: 'receive',
+                $spacer: $incoming_message_spacer
+            })
+
             $('.i-message-list').append($incoming_message_spacer);
             $incoming_message_spacer.append($incoming_message);
 
@@ -107,6 +124,11 @@
             const speed = 30;
 
             let $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+            self.messages.push({
+                type: 'receive',
+                $spacer: $outgoing_message_spacer
+            })
 
             let main_tl = new TimelineMax();
 

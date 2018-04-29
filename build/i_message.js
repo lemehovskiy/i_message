@@ -108,6 +108,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             self.is_input_wide = false;
 
+            self.messages = [];
+
             self.init();
         }
 
@@ -115,6 +117,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'init',
             value: function init() {
                 var self = this;
+            }
+        }, {
+            key: 'clear',
+            value: function clear() {
+                var self = this;
+
+                self.messages.forEach(function (message) {
+                    message.$spacer.remove();
+                });
+
+                self.messages = [];
             }
         }, {
             key: 'play_dialog',
@@ -158,6 +171,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var $incoming_message = $("<div class='incoming-message'>" + message.text + "</div>");
 
+                self.messages.push({
+                    type: 'receive',
+                    $spacer: $incoming_message_spacer
+                });
+
                 $('.i-message-list').append($incoming_message_spacer);
                 $incoming_message_spacer.append($incoming_message);
 
@@ -181,6 +199,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var speed = 30;
 
                 var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+                self.messages.push({
+                    type: 'receive',
+                    $spacer: $outgoing_message_spacer
+                });
 
                 var main_tl = new TimelineMax();
 
