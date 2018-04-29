@@ -13,6 +13,24 @@ $(document).ready(function () {
 
     $('.i-message-demo').iMessage();
 
+    $('.i-message-demo').iMessage('play_dialog', [
+        {
+            type: 'receive',
+            text: "Test receive 1",
+            after_play: function (){
+                console.log('received');
+            }
+        },
+        {
+            type: 'send',
+            text: "Test send 1",
+            delay: "+=5",
+            after_play: function (){
+                console.log('send');
+            }
+        }
+    ]);
+
 
 
     $('.play-btn').on('click', function(){

@@ -18,7 +18,6 @@
             //extend by function call
             self.settings = $.extend(true, {
 
-                test_property: false
 
             }, options);
 
@@ -42,27 +41,26 @@
         }
 
         init() {
-
             let self = this;
         }
 
-        play() {
+        play_dialog(messages) {
             let self = this;
 
-            self.master_tl
-                .add(self.send_message(1))
+            messages.forEach(function (message) {
 
-                .add(self.receive_message(), 3)
+                let delay = '+=0';
 
-                .add(self.send_message(), 6)
+                if (message.delay) delay = message.delay;
 
-                .add(self.receive_message(), 9)
+                if (message.type == 'receive') {
+                    self.master_tl.add(self.receive_message(message), delay)
+                }
+                else if (message.type == 'send') {
+                    self.master_tl.add(self.send_message(message), delay)
+                }
 
-                .add(self.receive_message(), 12)
-
-                .add(self.send_message(), 15)
-
-                .add(self.send_message(), 18)
+            })
         }
 
         update_timescale(timescale) {
@@ -72,68 +70,19 @@
             self.master_tl.timeScale(timescale);
         }
 
-        send_message() {
-
+        receive_message(message) {
             let self = this;
 
-            const messageBodyStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-            const speed = 30;
-            const character = "|";
-
-            let $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
-
-            let main_tl = new TimelineMax();
-
-
-            main_tl.add(function () {
-
-                self.$input.text('');
-                self.$btn_send.addClass('active');
-                self.$input.addClass('active');
-                $('.i-message-list').append($outgoing_message_spacer)
-            })
-
-            main_tl.to('.input-i-message', messageBodyStr.length / speed, {
-                text: messageBodyStr,
-                ease: Linear.easeNone,
-
-                onUpdate: function () {
-
-                    if (this.target[0].textContent.length > 15 && !(self.is_input_wide)) {
-                        TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
-                        self.switch_extra_buttons();
-                    }
-
-                    TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
-
-                    this.target[0].textContent += character
-
+            let main_tl = new TimelineMax({
+                onComplete: function(){
+                    message.after_play();
                 }
-            })
 
-            main_tl.add(function () {
-                self.set_placeholder()
-            })
-            main_tl.add(function () {
-                self.send_animation($outgoing_message_spacer, messageBodyStr)
-            })
-
-            return main_tl;
-
-        }
-
-        receive_message() {
-            let self = this;
-
-            const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-
-            const speed = 30;
-
-            let main_tl = new TimelineMax();
+            });
 
             let $incoming_message_spacer = $("<div class='incoming-message-spacer'></div>");
 
-            let $incoming_message = $("<div class='incoming-message'>" + message + "</div>");
+            let $incoming_message = $("<div class='incoming-message'>" + message.text + "</div>");
 
             $('.i-message-list').append($incoming_message_spacer);
             $incoming_message_spacer.append($incoming_message);
@@ -151,16 +100,67 @@
             return main_tl;
         }
 
-
-        send_animation($outgoing_message_spacer, messageBodyStr) {
+        send_message(message) {
 
             let self = this;
 
-            let send_animation_tl = new TimelineMax();
+            const speed = 30;
+
+            let $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+            let main_tl = new TimelineMax();
+
+
+            main_tl.add(function () {
+
+                self.$input.text('');
+                self.$btn_send.addClass('active');
+                self.$input.addClass('active');
+                $('.i-message-list').append($outgoing_message_spacer)
+            })
+
+            main_tl.to('.input-i-message', message.text.length / speed, {
+                text: message.text,
+                ease: Linear.easeNone,
+
+                onUpdate: function () {
+
+                    if (this.target[0].textContent.length > 15 && !(self.is_input_wide)) {
+                        TweenLite.to(self.$input_wrap, 0.5, {width: '80%'});
+                        self.switch_extra_buttons();
+                    }
+
+                    TweenLite.to($outgoing_message_spacer, .4, {height: self.$input.outerHeight()})
+
+                    this.target[0].textContent += "|"
+
+                }
+            })
+
+            main_tl.add(function () {
+                self.set_placeholder()
+            })
+            main_tl.add(function () {
+                self.send_animation($outgoing_message_spacer, message)
+            })
+
+            return main_tl;
+
+        }
+
+        send_animation($outgoing_message_spacer, message) {
+
+            let self = this;
+
+            let send_animation_tl = new TimelineMax({
+                onComplete: function(){
+                    message.after_play();
+                }
+            });
 
             let input_offset = self.$input.offset();
 
-            let $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
+            let $outgoing_message = $("<div class='outgoing-message'>" + message.text + "</div>");
             $outgoing_message_spacer.append($outgoing_message);
 
 

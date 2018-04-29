@@ -91,11 +91,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var self = this;
 
             //extend by function call
-            self.settings = $.extend(true, {
-
-                test_property: false
-
-            }, options);
+            self.settings = $.extend(true, {}, options);
 
             self.$element = $(element);
 
@@ -118,15 +114,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _createClass(IMessage, [{
             key: 'init',
             value: function init() {
-
                 var self = this;
             }
         }, {
-            key: 'play',
-            value: function play() {
+            key: 'play_dialog',
+            value: function play_dialog(messages) {
                 var self = this;
 
-                self.master_tl.add(self.send_message(1)).add(self.receive_message(), 3).add(self.send_message(), 6).add(self.receive_message(), 9).add(self.receive_message(), 12).add(self.send_message(), 15).add(self.send_message(), 18);
+                messages.forEach(function (message) {
+
+                    var delay = '+=0';
+
+                    if (message.delay) delay = message.delay;
+
+                    if (message.type == 'receive') {
+                        self.master_tl.add(self.receive_message(message), delay);
+                    } else if (message.type == 'send') {
+                        self.master_tl.add(self.send_message(message), delay);
+                    }
+                });
             }
         }, {
             key: 'update_timescale',
@@ -137,67 +143,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 self.master_tl.timeScale(timescale);
             }
         }, {
-            key: 'send_message',
-            value: function send_message() {
-
-                var self = this;
-
-                var messageBodyStr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-                var speed = 30;
-                var character = "|";
-
-                var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
-
-                var main_tl = new TimelineMax();
-
-                main_tl.add(function () {
-
-                    self.$input.text('');
-                    self.$btn_send.addClass('active');
-                    self.$input.addClass('active');
-                    $('.i-message-list').append($outgoing_message_spacer);
-                });
-
-                main_tl.to('.input-i-message', messageBodyStr.length / speed, {
-                    text: messageBodyStr,
-                    ease: Linear.easeNone,
-
-                    onUpdate: function onUpdate() {
-
-                        if (this.target[0].textContent.length > 15 && !self.is_input_wide) {
-                            TweenLite.to(self.$input_wrap, 0.5, { width: '80%' });
-                            self.switch_extra_buttons();
-                        }
-
-                        TweenLite.to($outgoing_message_spacer, .4, { height: self.$input.outerHeight() });
-
-                        this.target[0].textContent += character;
-                    }
-                });
-
-                main_tl.add(function () {
-                    self.set_placeholder();
-                });
-                main_tl.add(function () {
-                    self.send_animation($outgoing_message_spacer, messageBodyStr);
-                });
-
-                return main_tl;
-            }
-        }, {
             key: 'receive_message',
-            value: function receive_message() {
+            value: function receive_message(message) {
                 var self = this;
 
-                var message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+                var main_tl = new TimelineMax({
+                    onComplete: function onComplete() {
+                        message.after_play();
+                    }
 
-                var speed = 30;
-
-                var main_tl = new TimelineMax();
+                });
 
                 var $incoming_message_spacer = $("<div class='incoming-message-spacer'></div>");
 
-                var $incoming_message = $("<div class='incoming-message'>" + message + "</div>");
+                var $incoming_message = $("<div class='incoming-message'>" + message.text + "</div>");
 
                 $('.i-message-list').append($incoming_message_spacer);
                 $incoming_message_spacer.append($incoming_message);
@@ -214,16 +173,66 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return main_tl;
             }
         }, {
-            key: 'send_animation',
-            value: function send_animation($outgoing_message_spacer, messageBodyStr) {
+            key: 'send_message',
+            value: function send_message(message) {
 
                 var self = this;
 
-                var send_animation_tl = new TimelineMax();
+                var speed = 30;
+
+                var $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+                var main_tl = new TimelineMax();
+
+                main_tl.add(function () {
+
+                    self.$input.text('');
+                    self.$btn_send.addClass('active');
+                    self.$input.addClass('active');
+                    $('.i-message-list').append($outgoing_message_spacer);
+                });
+
+                main_tl.to('.input-i-message', message.text.length / speed, {
+                    text: message.text,
+                    ease: Linear.easeNone,
+
+                    onUpdate: function onUpdate() {
+
+                        if (this.target[0].textContent.length > 15 && !self.is_input_wide) {
+                            TweenLite.to(self.$input_wrap, 0.5, { width: '80%' });
+                            self.switch_extra_buttons();
+                        }
+
+                        TweenLite.to($outgoing_message_spacer, .4, { height: self.$input.outerHeight() });
+
+                        this.target[0].textContent += "|";
+                    }
+                });
+
+                main_tl.add(function () {
+                    self.set_placeholder();
+                });
+                main_tl.add(function () {
+                    self.send_animation($outgoing_message_spacer, message);
+                });
+
+                return main_tl;
+            }
+        }, {
+            key: 'send_animation',
+            value: function send_animation($outgoing_message_spacer, message) {
+
+                var self = this;
+
+                var send_animation_tl = new TimelineMax({
+                    onComplete: function onComplete() {
+                        message.after_play();
+                    }
+                });
 
                 var input_offset = self.$input.offset();
 
-                var $outgoing_message = $("<div class='outgoing-message'>" + messageBodyStr + "</div>");
+                var $outgoing_message = $("<div class='outgoing-message'>" + message.text + "</div>");
                 $outgoing_message_spacer.append($outgoing_message);
 
                 var $status_wrap = $("<div class='status-wrap'>Delivered</div>");
