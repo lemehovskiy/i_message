@@ -4,6 +4,7 @@
     "description": "jQuery plugin",
     "main": "build/i_message.js",
     "dependencies": {
+        "gsap": "^1.20.4",
         "jquery": "^3.2.1"
     },
     "devDependencies": {
@@ -20,7 +21,7 @@
         "jQuery",
         "plugin",
         "iphone",
-        "imessage",
+        "imessage   ",
         "animation"
     ],
     "repository": {

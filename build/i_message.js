@@ -162,7 +162,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var main_tl = new TimelineMax({
                     onComplete: function onComplete() {
-                        message.after_play();
+                        if (message.after_play) message.after_play();
                     }
 
                 });
@@ -249,7 +249,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var send_animation_tl = new TimelineMax({
                     onComplete: function onComplete() {
-                        message.after_play();
+                        if (message.after_play) message.after_play();
                     }
                 });
 

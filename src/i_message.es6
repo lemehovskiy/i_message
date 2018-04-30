@@ -87,7 +87,7 @@
 
             let main_tl = new TimelineMax({
                 onComplete: function(){
-                    message.after_play();
+                    if (message.after_play) message.after_play();
                 }
 
             });
@@ -176,7 +176,7 @@
 
             let send_animation_tl = new TimelineMax({
                 onComplete: function(){
-                    message.after_play();
+                    if (message.after_play) message.after_play();
                 }
             });
 
