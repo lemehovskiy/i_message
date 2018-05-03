@@ -1,0 +1,167 @@
+.i-message {
+  width: 300px;
+  height: 510px;
+  position: relative;
+  -webkit-transform-origin: left center;
+  -ms-transform-origin: left center;
+  transform-origin: left center;
+  font-size: 14px;
+  background: white;
+}
+
+.i-message i {
+  color: #858E98;
+}
+
+.i-message .outgoing-message-spacer {
+  width: 76%;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 10px 0 0;
+}
+
+.i-message .outgoing-message {
+  margin: 0 0 0 auto;
+  background: #007AFF;
+  border-radius: 15px;
+  padding: 8px 10px;
+  color: white;
+}
+
+.i-message .outgoing-message:before {
+  font-family: "fontello";
+  content: '\E804';
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  font-size: 30px;
+  color: #007AFF;
+}
+
+.i-message .incoming-message-spacer {
+  width: 76%;
+  height: 0;
+  margin: 10px 0 0;
+}
+
+.i-message .incoming-message-spacer .incoming-message {
+  opacity: 0;
+  background: #E5E5EA;
+  border-radius: 15px;
+  padding: 8px 10px;
+  color: #231F20;
+  position: relative;
+}
+
+.i-message .incoming-message-spacer .incoming-message:before {
+  font-family: "fontello";
+  content: '\E807';
+  position: absolute;
+  left: -4px;
+  bottom: 0px;
+  font-size: 9px;
+  color: #E5E5EA;
+}
+
+.i-message .input-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 9px 5px;
+}
+
+.i-message .status-wrap {
+  height: 0;
+  opacity: 0;
+  text-align: right;
+  font-size: 9.9px;
+  padding: 3px 0 0px;
+  color: #8E8E93;
+}
+
+.i-message .btn-send {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 23px;
+  width: 19px;
+  height: 19px;
+}
+
+.i-message .btn-send i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+}
+
+.i-message .btn-send:not(.active) .icon-sent-message {
+  display: none;
+}
+
+.i-message .btn-send.active .icon-sent-message {
+  color: #007AFF;
+}
+
+.i-message .btn-send.active .icon-tap-to-talk {
+  display: none;
+}
+
+.i-message .extra-buttons-group {
+  white-space: nowrap;
+  position: relative;
+  bottom: 3px;
+}
+
+.i-message .extra-button {
+  display: inline-block;
+  font-size: 26px;
+  margin: 0 1.6px;
+}
+
+.i-message .extra-button:nth-child(3) {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.i-message .input-wrap {
+  border: 1px solid #C8C8CD;
+  border-radius: 14px;
+  position: absolute;
+  right: 10px;
+  bottom: 14px;
+  width: 64%;
+  padding: 6px 30px 8px 10px;
+  background: #FAFAFA;
+  color: #C7C7CC;
+}
+
+.i-message .input-wrap .input-i-message.active {
+  color: #231F20;
+}
+
+.i-message .i-message-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding: 0 10px;
+  width: 100%;
+  height: calc(100% - 50px);
+}

@@ -1,3 +1,5 @@
+require("./i_message.scss");
+
 /*
  Version: 1.0.0
  Author: lemehovskiy
@@ -18,7 +20,6 @@
             //extend by function call
             self.settings = $.extend(true, {
 
-
             }, options);
 
             self.$element = $(element);
@@ -27,6 +28,7 @@
             self.data_options = self.$element.data('i-message');
             self.settings = $.extend(true, self.settings, self.data_options);
 
+            self.$container = self.$element.parent();
 
             self.$input_wrap = $('.input-wrap');
             self.$input = $('.input-i-message');
@@ -44,6 +46,13 @@
 
         init() {
             let self = this;
+
+            self.resize();
+
+            $(window).on('resize', function(){
+                self.resize();
+            })
+
         }
 
         clear(){
@@ -54,6 +63,30 @@
             })
 
             self.messages = [];
+        }
+
+        resize(){
+            let self = this;
+
+            let container_width = self.$container.innerWidth();
+
+            let scale_coef = 1;
+            
+            if (container_width < 300) {
+                scale_coef = container_width / 300;
+            }
+
+            else if (container_width > 300) {
+                scale_coef = 1;
+            }
+
+            self.$element.css({
+                '-webkit-transform' : 'scale(' + scale_coef + ')',
+                '-moz-transform'    : 'scale(' + scale_coef + ')',
+                '-ms-transform'     : 'scale(' + scale_coef + ')',
+                '-o-transform'      : 'scale(' + scale_coef + ')',
+                'transform'         : 'scale(' + scale_coef + ')'
+            });
         }
 
         play_dialog(messages) {
