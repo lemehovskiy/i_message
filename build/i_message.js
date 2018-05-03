@@ -105,10 +105,15 @@ __webpack_require__(1);
 
             self.$container = self.$element.parent();
 
-            self.$input_wrap = $('.input-wrap');
-            self.$input = $('.input-i-message');
+            self.$input_wrap = self.$element.find('.input-wrap');
+            self.$input = self.$element.find('.input-i-message');
+            self.$message_list = self.$element.find('.i-message-list');
 
-            self.$btn_send = $('.btn-send');
+            self.$btn_send = self.$element.find('.btn-send');
+
+            self.$extra_btn_1 = self.$element.find('.extra-button:nth-child(1)');
+            self.$extra_btn_2 = self.$element.find('.extra-button:nth-child(2)');
+            self.$extra_btn_3 = self.$element.find('.extra-button:nth-child(3)');
 
             self.master_tl = new TimelineMax();
 
@@ -211,11 +216,11 @@ __webpack_require__(1);
                     $spacer: $incoming_message_spacer
                 });
 
-                $('.i-message-list').append($incoming_message_spacer);
+                self.$message_list.append($incoming_message_spacer);
                 $incoming_message_spacer.append($incoming_message);
 
                 main_tl.add(function () {
-                    $('.i-message-list').append($incoming_message_spacer);
+                    self.$message_list.append($incoming_message_spacer);
                     $incoming_message_spacer.append($incoming_message);
                 });
 
@@ -247,10 +252,10 @@ __webpack_require__(1);
                     self.$input.text('');
                     self.$btn_send.addClass('active');
                     self.$input.addClass('active');
-                    $('.i-message-list').append($outgoing_message_spacer);
+                    self.$message_list.append($outgoing_message_spacer);
                 });
 
-                main_tl.to('.input-i-message', message.text.length / speed, {
+                main_tl.to(self.$input, message.text.length / speed, {
                     text: message.text,
                     ease: Linear.easeNone,
 
@@ -332,9 +337,9 @@ __webpack_require__(1);
 
                 self.is_input_wide = false;
 
-                extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, { x: 0, opacity: 0 });
-                extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, { x: 0, opacity: 1 }, '-=0.2');
-                extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, { x: 0, opacity: 1 }, '-=0.2');
+                extra_btn_tl.to(self.$extra_btn_3, 0.3, { x: 0, opacity: 0 });
+                extra_btn_tl.to(self.$extra_btn_2, 0.3, { x: 0, opacity: 1 }, '-=0.2');
+                extra_btn_tl.to(self.$extra_btn_1, 0.3, { x: 0, opacity: 1 }, '-=0.2');
 
                 return extra_btn_tl;
             }
@@ -348,9 +353,9 @@ __webpack_require__(1);
 
                 var extra_btn_tl = new TimelineMax();
 
-                extra_btn_tl.to('.extra-button:nth-child(1)', 0.3, { x: -10, opacity: 0 });
-                extra_btn_tl.to('.extra-button:nth-child(2)', 0.3, { x: -10, opacity: 0 }, '-=0.2');
-                extra_btn_tl.to('.extra-button:nth-child(3)', 0.3, { x: -43, opacity: 1 }, '-=0.2');
+                extra_btn_tl.to(self.$extra_btn_1, 0.3, { x: -10, opacity: 0 });
+                extra_btn_tl.to(self.$extra_btn_2, 0.3, { x: -10, opacity: 0 }, '-=0.2');
+                extra_btn_tl.to(self.$extra_btn_3, 0.3, { x: -43, opacity: 1 }, '-=0.2');
 
                 return extra_btn_tl;
             }
