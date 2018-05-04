@@ -18,6 +18,7 @@
   -ms-flex-item-align: end;
   align-self: flex-end;
   margin: 10px 0 0;
+  text-align: right;
 }
 
 .i-message .outgoing-message {
@@ -26,6 +27,7 @@
   border-radius: 15px;
   padding: 8px 10px;
   color: white;
+  display: inline-block;
 }
 
 .i-message .outgoing-message:before {
@@ -36,6 +38,7 @@
   bottom: -3px;
   font-size: 30px;
   color: #007AFF;
+  z-index: -1;
 }
 
 .i-message .incoming-message-spacer {
@@ -51,6 +54,7 @@
   padding: 8px 10px;
   color: #231F20;
   position: relative;
+  display: inline-block;
 }
 
 .i-message .incoming-message-spacer .incoming-message:before {
