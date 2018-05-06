@@ -63,6 +63,8 @@ require("./i_message.scss");
         clear(){
             let self = this;
 
+            self.master_tl.clear();
+
             self.messages.forEach(function(message){
                 message.$spacer.remove();
             })
@@ -92,6 +94,51 @@ require("./i_message.scss");
                 '-o-transform'      : 'scale(' + scale_coef + ')',
                 'transform'         : 'scale(' + scale_coef + ')'
             });
+        }
+
+        set_dialog(messages) {
+            let self = this;
+
+            messages.forEach(function (message) {
+
+                if (message.type == 'receive') {
+                    let $incoming_message_spacer = $("<div class='incoming-message-spacer' style='height: auto;'></div>");
+
+                    let $incoming_message = $("<div class='incoming-message' style='opacity: 1'>" + message.text + "</div>");
+
+                    self.messages.push({
+                        type: 'receive',
+                        $spacer: $incoming_message_spacer
+                    })
+
+                    self.$message_list.append($incoming_message_spacer);
+                    $incoming_message_spacer.append($incoming_message);
+                }
+                else if (message.type == 'send') {
+                    let $outgoing_message_spacer = $("<div class='outgoing-message-spacer'></div>");
+
+                    self.$message_list.append($outgoing_message_spacer)
+
+                    self.messages.push({
+                        type: 'receive',
+                        $spacer: $outgoing_message_spacer
+                    })
+
+                    let $outgoing_message = $("<div class='outgoing-message' style='position: relative;'>" + message.text + "</div>");
+                    $outgoing_message_spacer.append($outgoing_message);
+
+                    let $status_wrap = $("<div class='status-wrap' style='height: auto; opacity: 1'>Delivered</div>");
+                    $outgoing_message_spacer.append($status_wrap);
+
+
+                    let $old_status_messages = $('.outgoing-message-spacer:not(:last) .status-wrap');
+
+                    $old_status_messages.css({
+                        'display': 'none'
+                    })
+                }
+
+            })
         }
 
         play_dialog(messages) {
