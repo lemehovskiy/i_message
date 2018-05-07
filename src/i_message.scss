@@ -93,6 +93,10 @@
     display: flex;
     justify-content: space-between;
     padding: 9px 5px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
   }
 
   .status-wrap {
@@ -181,6 +185,8 @@
     justify-content: flex-end;
     padding: 0 10px;
     width: 100%;
-    height: calc(100% - 50px);
+    bottom: 50px;
+    position: absolute;
+    left: 0;
   }
 }
