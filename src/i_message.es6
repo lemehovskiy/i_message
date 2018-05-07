@@ -76,23 +76,16 @@ require("./i_message.scss");
             let self = this;
 
             let container_width = self.$container.innerWidth();
+            let element_width = self.$element.outerWidth();
 
-            let scale_coef = 1;
-
-            if (container_width < 300) {
-                scale_coef = container_width / 300;
-            }
-
-            else if (container_width > 300) {
-                scale_coef = 1;
-            }
+            let scale_coef = container_width / element_width;
 
             self.$element.css({
-                '-webkit-transform' : 'scale(' + scale_coef + ')',
-                '-moz-transform'    : 'scale(' + scale_coef + ')',
-                '-ms-transform'     : 'scale(' + scale_coef + ')',
-                '-o-transform'      : 'scale(' + scale_coef + ')',
-                'transform'         : 'scale(' + scale_coef + ')'
+                '-webkit-transform' : 'scale(' + scale_coef + ') translate(-50%, -50%)',
+                '-moz-transform'    : 'scale(' + scale_coef + ') translate(-50%, -50%)',
+                '-ms-transform'     : 'scale(' + scale_coef + ') translate(-50%, -50%)',
+                '-o-transform'      : 'scale(' + scale_coef + ') translate(-50%, -50%)',
+                'transform'         : 'scale(' + scale_coef + ') translate(-50%, -50%)'
             });
         }
 
