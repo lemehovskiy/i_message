@@ -13,101 +13,28 @@ $(document).ready(function () {
 
     $('.i-message-demo').iMessage();
 
-    // $('.i-message-demo').iMessage('play_dialog', [
-    //     {
-    //         type: 'receive',
-    //         text: "Test receive 1",
-    //         after_play: function (){
-    //             console.log('received');
-    //         }
-    //     },
-    //     {
-    //         type: 'send',
-    //         text: "Test send 1",
-    //         delay: "+=1",
-    //         after_play: function (){
-    //             console.log('send');
-    //             $('.i-message-demo').iMessage('clear');
-    //
-    //             $('.i-message-demo').iMessage('play_dialog', [
-    //                 {
-    //                     type: 'receive',
-    //                     text: "New Test receive 1",
-    //                     after_play: function (){
-    //                         console.log('received');
-    //                     }
-    //                 },
-    //                 {
-    //                     type: 'send',
-    //                     text: "New Test send 1",
-    //                     delay: "+=1",
-    //                     after_play: function (){
-    //                         console.log('send');
-    //                     }
-    //                 }
-    //             ]);
-    //         }
-    //     }
-    // ]);
-
-
     $('.i-message-demo').iMessage('play_dialog', [
         {
             type: 'receive',
-            text: "Test receive 1 asdf asdfasdfasdf"
+            text: "Test receive 1",
         },
         {
             type: 'send',
-            text: "Test receive 1 asdf asdfasdfasdf"
+            text: "Test send 1",
+            delay: '+=1'
         },
         {
             type: 'receive',
-            text: "Test receive 1 asdf asdfasdfasdf"
+            text: "Test receive 2",
+            delay: '+=2'
         },
         {
             type: 'send',
-            text: "Test receive 1 asdf asdfasdfasdf"
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            delay: '+=1'
         },
-        {
-            type: 'receive',
-            text: "Test receive 1 asdf asdfasdfasdf"
-        },
-        {
-            type: 'send',
-            text: "Test receive 1 asdf asdfasdfasdf"
-        },
-        {
-            type: 'receive',
-            text: "Test receive 1 asdf asdfasdfasdf"
-        },
-        {
-            type: 'send',
-            text: "Test receive 1 asdf asdfasdfasdf"
-        }
     ]);
 
-    setTimeout(function(){
-        $('.i-message-demo').iMessage('clear');
-
-        $('.i-message-demo').iMessage('set_dialog', [
-            {
-                type: 'receive',
-                text: "Test receive 1"
-            },
-            {
-                type: 'send',
-                text: "Test send 1"
-            },
-            {
-                type: 'receive',
-                text: "Test receive 2"
-            },
-            {
-                type: 'send',
-                text: "Test send 2"
-            }
-        ]);
-    }, 2000)
 
 
 

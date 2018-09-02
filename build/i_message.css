@@ -1,20 +1,18 @@
 .phone-wrap {
   max-width: 400px;
-  background: #ffcd02;
   margin: auto;
   position: relative;
 }
 
 .phone-wrap .rect-outer {
-  padding: 200% 0 0;
+  padding: 204% 0 0;
 }
 
 .i-message-area {
   position: absolute;
-  width: 80%;
-  height: 68%;
-  background: red;
-  top: 5%;
+  width: 85.3%;
+  height: 46%;
+  top: 12.5%;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
